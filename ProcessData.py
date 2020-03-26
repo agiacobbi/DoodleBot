@@ -9,11 +9,13 @@
 import numpy as np 
 import matplotlib.pyplot as plt
 import json
+import os
 from PIL import Image, ImageDraw
+
 
 # constant values
 PATH_NDJSON = "../airplane.ndjson"       # path to dataset directory
-NUM_PER_CLASS = 10000                               # number of examples to extract
+NUM_PER_CLASS = 10000                    # number of examples to extract
 
 
 # Processes the 'drawing' component of the json object. Reads the each
@@ -82,9 +84,12 @@ def processJsonClass(path, num_samples):
 
         index += 1
 
+    # TODO: write data to a file
+
 
 # process all classes in dir, save each class as np array
 # with dimension (256, 256, NUM_SAMPLES)
 if __name__ == "__main__":
     # loop through dataset and process each class
+    # TODO: finish looping thorugh directory
     processJsonClass(PATH_NDJSON, NUM_PER_CLASS)
