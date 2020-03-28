@@ -22,9 +22,9 @@ import os
 from PIL import Image, ImageDraw
 
 
-PATH_DATASET_DIR = "../airplane.ndjson"      # path to dataset directory
+PATH_DATASET_DIR = "./dataset/"      # path to dataset directory
 PATH_CLEAN_DATA = "./clean_data/"
-MAX_SAMPLES = 10000       # number of examples to extract
+MAX_SAMPLES = 5000       # number of examples to extract
 
 
 def process_strokes(stroke_list):
@@ -75,7 +75,7 @@ def process_strokes(stroke_list):
     return image_arr
 
 
-def process_json_class(path, num_samples):
+def process_json_class(path, class_name, num_samples):
     """Extracts a number of examples from an .ndjson file
 
     Processes an .ndjson file containing drawing data for a single class. 
@@ -85,6 +85,7 @@ def process_json_class(path, num_samples):
 
     Args:
         path: a path to the .ndjson file to be processed
+        class_name: name of class being processed
         num_samples: the number of samples to extract from the .ndjson file. If
             the number of samples in the files is less than num_samples, will
             finish extraction once all samples are processed
@@ -92,6 +93,9 @@ def process_json_class(path, num_samples):
 
     images = []
     index = 0
+    class_name = os.path.splitext(class_name)[0]
+
+    print('Processing drawings of ' +  class_name + '\n')
 
     # get json objects
     with open(path) as f:
@@ -108,13 +112,19 @@ def process_json_class(path, num_samples):
 
         index += 1
 
-    # TODO: write data to a file
+    processed_drawings = np.array(images)
+    np.save(PATH_CLEAN_DATA + class_name, processed_drawings)
 
+    print("done.")
 
 def main():
+    if not os.path.exists(PATH_CLEAN_DATA):
+        os.makedirs(PATH_CLEAN_DATA)
     # loop through dataset and process each class
     # TODO: finish looping thorugh directory
-    process_json_class(PATH_DATASET_DIR, MAX_SAMPLES)
+    for filename in os.listdir(PATH_DATASET_DIR):
+        if filename.endswith('.ndjson'):
+            process_json_class(PATH_DATASET_DIR + filename, filename, MAX_SAMPLES)
 
 
 if __name__ == "__main__":
