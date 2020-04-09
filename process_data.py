@@ -23,8 +23,16 @@ from PIL import Image, ImageDraw
 
 
 PATH_DATASET_DIR = "./dataset/"      # path to dataset directory
-PATH_CLEAN_DATA = "./clean_data/"
-MAX_SAMPLES = 5000       # number of examples to extract
+PATH_CLEAN_DATA = "./dog_data/"
+MAX_SAMPLES = 120000       # number of examples to extract
+# CLASSES = ['ant', 'bear', 'bee', 'bird', 'butterfly', 'camel', 'cat', 'cow', 
+#            'crab', 'crocodile', 'dog', 'dolphin', 'dragon', 'duck', 'elephant',
+#            'fish', 'flamingo', 'frog', 'giraffe', 'hedgehog', 'horse', 'monkey',
+#            'mosquito', 'mouse', 'octopus', 'owl', 'panda', 'parrot', 'penguin',
+#            'pig', 'rabbit', 'raccoon', 'rhinoceros', 'scorpion', 'sea turtle', 
+#            'shark', 'sheep', 'snail', 'snake', 'spider', 'squirrel', 'swan', 
+#            'tiger', 'whale', 'zebra']
+CLASSES = ['dog']
 
 
 def process_strokes(stroke_list):
@@ -52,8 +60,8 @@ def process_strokes(stroke_list):
             (the timing data is omitted for the simplified dataset)
 
     Returns:
-        A numpy array with dimension 256 x 256 where each cell represents a pixel 
-        in the doodle. 
+        A numpy array with dimension 256 x 256 where each cell represents a 
+        pixel in the doodle. 
     """
 
     img = Image.new("L", (256, 256), 255)
@@ -71,7 +79,9 @@ def process_strokes(stroke_list):
     for stroke in stroke_coordinates:
         img_draw.line(stroke, fill=0, width=5)
 
+    img = img.resize((28, 28), resample=Image.LANCZOS)
     image_arr = np.array(img)
+    image_arr = (image_arr - 127.5) / 127.5
     return image_arr
 
 
@@ -123,8 +133,10 @@ def main():
     # loop through dataset and process each class
     # TODO: finish looping thorugh directory
     for filename in os.listdir(PATH_DATASET_DIR):
-        if filename.endswith('.ndjson'):
-            process_json_class(PATH_DATASET_DIR + filename, filename, MAX_SAMPLES)
+        class_name = os.path.splitext(filename)[0]
+        if filename.endswith('.ndjson') and class_name in CLASSES:
+            process_json_class(PATH_DATASET_DIR + filename, filename, 
+                               MAX_SAMPLES)
 
 
 if __name__ == "__main__":

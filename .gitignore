@@ -1,2 +1,5 @@
 dataset/
 clean_data/
+training_checkpoints/
+*.png
+*.npy
