@@ -7,16 +7,15 @@ from tensorflow.keras import layers
 from PIL import Image
 
 
-PATH_DATA = './cat_data/'
+PATH_DATA = './processed_data/vehicle_data/'
 PATH_CHECKPOINTS = './training_checkpoints/'
-PATH_IMAGE_CHECKPOINTS = './cat_images/'
+PATH_IMAGE_CHECKPOINTS = './progress_images/vehicle_images/'
 BUFFER_SIZE = 60000
 BATCH_SIZE = 256
 EPOCHS = 150
 NOISE_DIM = 100
-NUM_TO_GENERATE = 16
+NUM_TO_GENERATE = 25
 SEED = tf.random.normal([NUM_TO_GENERATE, NOISE_DIM])
-
 
 
 def load_data():
@@ -157,10 +156,10 @@ def generate_and_save_images(model, epoch, test_input):
     # This is so all layers run in inference mode (batchnorm).
     predictions = model(test_input, training=False)
 
-    fig = plt.figure(figsize=(4,4))
+    fig = plt.figure(figsize=(5,5))
 
     for i in range(predictions.shape[0]):
-        plt.subplot(4, 4, i + 1)
+        plt.subplot(5, 5, i + 1)
         plt.imshow(predictions[i, :, :, 0] * 127.5 + 127.5, cmap='gray')
         plt.axis('off')
 

@@ -23,8 +23,8 @@ from PIL import Image, ImageDraw
 
 
 PATH_DATASET_DIR = "./dataset/"      # path to dataset directory
-PATH_CLEAN_DATA = "./dog_data/"
-MAX_SAMPLES = 120000       # number of examples to extract
+PATH_CLEAN_DATA = "./processed_data/vehicle_data/"
+MAX_SAMPLES = 50000       # number of examples to extract
 # CLASSES = ['ant', 'bear', 'bee', 'bird', 'butterfly', 'camel', 'cat', 'cow', 
 #            'crab', 'crocodile', 'dog', 'dolphin', 'dragon', 'duck', 'elephant',
 #            'fish', 'flamingo', 'frog', 'giraffe', 'hedgehog', 'horse', 'monkey',
@@ -32,7 +32,8 @@ MAX_SAMPLES = 120000       # number of examples to extract
 #            'pig', 'rabbit', 'raccoon', 'rhinoceros', 'scorpion', 'sea turtle', 
 #            'shark', 'sheep', 'snail', 'snake', 'spider', 'squirrel', 'swan', 
 #            'tiger', 'whale', 'zebra']
-CLASSES = ['dog']
+CLASSES = ['ambulance', 'bus', 'car', 'firetruck', 'pickup truck', 'police car',
+           'school bus', 'tractor', 'truck']
 
 
 def process_strokes(stroke_list):
