@@ -1,3 +1,14 @@
+"""This program sets up and trains a GAN
+
+TODO Finish documentation
+
+Authors:
+    Alex Giacobbi
+
+Date:
+    4/1/2020"""
+
+
 import os
 import time
 import numpy as np 
